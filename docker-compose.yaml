@@ -1,7 +1,0 @@
-services:
-  db:
-    image: backend-image
-networks:
-  default:
-    external:
-      name: database-network # Must match the actual name of the network
