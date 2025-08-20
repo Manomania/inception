@@ -106,7 +106,7 @@ endef
 
 define DISPLAY_HELP
 						$(call SEPARATOR)
-						@printf "                              🚀 MAKEFILE HELP\n"
+						@printf "                              MAKEFILE HELP\n"
 						$(call SEPARATOR)
 						@printf "$(GREEN)Basic commands:$(DEF_COLOR)\n"
 						@printf "%-33b%b" "make" "- Build in release mode\n"
@@ -118,23 +118,16 @@ define DISPLAY_HELP
 						$(call SEPARATOR)
 endef
 
-define PLURAL
-$(if $(filter 1,$(1)),file,files)
-endef
-
 define DISPLAY_INFO
 						$(call SEPARATOR)
-						@printf "                        📊 MAKEFILE INFO\n"
+						@printf "                              MAKEFILE INFO\n"
 						$(call SEPARATOR)
-						@printf "%-30b%b" "$(GREEN)🖥️  Système:$(DEF_COLOR)" "$(UNAME_S)\n"
-						@printf "%-30b%b" "$(GREEN)🔧 CPU Cores:$(DEF_COLOR)" "$(NPROCS)\n"
-						@printf "%-30b%b" "$(GREEN)🐳 Docker:$(DEF_COLOR)" "$$(docker --version 2>/dev/null || echo 'Non installé')\n"
-						@printf "%-30b%b" "$(GREEN)📁 Répertoire:$(DEF_COLOR)" "$$(pwd)\n"
-						@printf "%-30b%b" "$(GREEN)🏷️  Registry:$(DEF_COLOR)" "$(DOCKER_REGISTRY)\n"
-						@printf "%-30b%b" "$(GREEN)📋 Compose Files:$(DEF_COLOR)" "\n"
-						@printf "    %-26s %s\n" "• Principal:" "$(COMPOSE_FILE)"
-						@printf "    %-26s %s\n" "• Production:" "$(COMPOSE_FILE_PROD)"
-						@printf "    %-26s %s\n" "• Développement:" "$(COMPOSE_FILE_DEV)"
+						@printf "%-39b%b" "$(GREEN)🖥️ Système:$(DEF_COLOR)" "$(UNAME_S)\n"
+						@printf "%-35b%b" "$(GREEN)🔧 CPU Cores:$(DEF_COLOR)" "$(NPROCS)\n"
+						@printf "%-35b%b" "$(GREEN)🐳 Docker:$(DEF_COLOR)" "$$(docker --version 2>/dev/null || echo 'Non installé')\n"
+						@printf "%-36b%b" "$(GREEN)📁 Répertoire:$(DEF_COLOR)" "$$(pwd)\n"
+						@printf "%-35b%b" "$(GREEN)📋 Compose Files:$(DEF_COLOR)" "\n"
+						@printf "%-20b%b" "• Principal:" "$(COMPOSE_F)\n"
 						$(call SEPARATOR)
 endef
 
