@@ -10,7 +10,7 @@ RUN     apt-get update -y && \
         -out certificat.crt \
         -subj "/C=FR/L=Paris/O=42/CN=maximart.42.fr"
 
-COPY    conf/nginx.conf /etc/nginx/sites-enabled/default
+COPY    conf/nginx.conf /etc/nginx/sites-available/default
 
 EXPOSE  443
 
