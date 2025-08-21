@@ -1,4 +1,6 @@
-FROM ubuntu:latest
-LABEL authors="maximart"
+FROM    debian:bookworm
 
-ENTRYPOINT ["top", "-b"]
+LABEL   authors="maximart"
+
+RUN     apt update -y && \
+        apt install -y wordpress php-fpm

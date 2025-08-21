@@ -1,0 +1,6 @@
+services:
+  mariadb:
+  nginx:
+    restart: always
+    build: .
+  wordpress:
