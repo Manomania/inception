@@ -15,7 +15,7 @@ RUN     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 COPY    conf/nginx.conf /etc/nginx/sites-available/default
 
-RUN     ln -sf /etc/nginx/site-available/default /etc/nginx/sites-enabled/default
+RUN     ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 RUN     mkdir -p /var/www/html
 
