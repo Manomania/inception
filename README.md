@@ -3,11 +3,13 @@ Sources:
 
 DOCKER:
 https://docs.docker.com/build/building/best-practices/
+https://docs.docker.com/reference/compose-file/legacy-versions/#healthcheck
 
 
 
 NGINX:
 https://nginx.org/en/docs/
+https://docs.nginx.com/
 https://datatracker.ietf.org/doc/html/rfc5246
 https://datatracker.ietf.org/doc/html/rfc7540
 https://ssl-config.mozilla.org/#server=nginx&version=1.27.3&config=modern&openssl=3.4.0&guideline=5.7 (Understand the configuration of nginx)
@@ -23,7 +25,14 @@ https://www.feistyduck.com/library/openssl-cookbook/
 https://docs.openssl.org/master/
 
 WORDPRESS:
+https://docs.docker.com/reference/samples/wordpress/
+https://wp-cli.org/
+https://github.com/docker-library/wordpress
 
 PHP-FPM:
 https://www.php.net/manual/fr/install.fpm.php
+https://www.php.net/manual/en/install.fpm.configuration.php
+
+MARIADB:
+
 
