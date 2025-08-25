@@ -1,6 +1,38 @@
 services:
+
   mariadb:
-  nginx:
+    container_name: mariadb
     restart: always
-    build: .
+    build:
+      context: ./requirements/mariadb
+    ports:
+      - "3306"
+    volumes:
+      - mariadb
+    networks:
+      - inception
+
+  nginx:
+    container_name: nginx
+    restart: always
+    build:
+      context: ./requirements/nginx
+    ports:
+      - "443:443"
+    depends_on:
+      - wordpress
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      - inception
   wordpress:
+    container_name: wordpress
+    restart: always
+    build:
+      context: ./requirements/wordpress
+
+  volumes:
+
+  networks:
+    inception:
+      driver: bridge
