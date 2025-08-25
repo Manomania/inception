@@ -34,5 +34,8 @@ https://www.php.net/manual/fr/install.fpm.php
 https://www.php.net/manual/en/install.fpm.configuration.php
 
 MARIADB:
+https://mariadb.com/docs/server/ha-and-performance/optimization-and-tuning
+https://mariadb.com/docs/server/clients-and-utilities/legacy-clients-and-utilities/mysql_secure_installation
+https://docs.docker.com/reference/samples/mariadb/
 
 
