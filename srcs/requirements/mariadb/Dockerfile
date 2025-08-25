@@ -1,4 +1,7 @@
-FROM ubuntu:latest
-LABEL authors="maximart"
+FROM    debian:bookworm
 
-ENTRYPOINT ["top", "-b"]
+LABEL   authors="maximart"
+
+RUN     apt-get update -y && \
+        apt-get install -y mariadb-server && \
+        rm -rf /var/lib/apt/lists/*
