@@ -2,13 +2,26 @@ services:
 
   mariadb:
     container_name: mariadb
-    restart: always
     build:
       context: ./requirements/mariadb
-    ports:
-      - "3306"
+    restart: always
+    env_file: .env
     volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - inception
+
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: ./requirements/wordpress
+    restart: always
+    env_file: .env
+    depends_on:
       - mariadb
+    volumes:
+      - wp_data:/var/www/html
     networks:
       - inception
 
@@ -25,14 +38,13 @@ services:
       - wp_data:/var/www/html
     networks:
       - inception
-  wordpress:
-    container_name: wordpress
-    restart: always
-    build:
-      context: ./requirements/wordpress
 
-  volumes:
+volumes:
+  db_data:
+    driver: local
+  wp_data:
+    driver: local
 
-  networks:
-    inception:
-      driver: bridge
+networks:
+  inception:
+    driver: bridge
