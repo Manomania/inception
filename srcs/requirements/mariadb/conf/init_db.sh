@@ -7,7 +7,12 @@ else
   echo "BDD already exist"
 fi
 
-mysqld --user=mysql & # Background server
+mysqld --user=mysql --datadir=/var/lib/mysql & # Background server
+
+while ! mysqladmin ping --silent 2>/dev/null; do
+    echo "Server waiting..."
+    sleep 1
+done
 
 mysql -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};" # Create Database
 mysql -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
