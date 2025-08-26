@@ -2,8 +2,8 @@ services:
 
   mariadb:
     container_name: mariadb
-    secrets:
-      - MYSQL_ROOT_PASSWORD
+#    secrets:
+#      - MYSQL_ROOT_PASSWORD
     build:
       context: ./requirements/mariadb
     restart: always
