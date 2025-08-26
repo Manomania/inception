@@ -28,6 +28,7 @@ WORDPRESS:
 https://docs.docker.com/reference/samples/wordpress/
 https://wp-cli.org/
 https://github.com/docker-library/wordpress
+https://wordpress.org/about/requirements/
 
 PHP-FPM:
 https://www.php.net/manual/fr/install.fpm.php
