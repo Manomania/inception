@@ -1,8 +1,11 @@
 #!/bin/bash
 
 set -e # if error, stop everything
-
-mysql_install_db --user=mysql --datadir=/var/lib/mysql # Init BDD for the first time
+if [ ! -d "/var/lib/mysql/mysql" ]; then
+  mysql_install_db --user=mysql --datadir=/var/lib/mysql # Init BDD for the first time
+else
+  echo "BDD already exist"
+fi
 
 mysqld --user=mysql & # Background server
 
