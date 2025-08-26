@@ -22,7 +22,7 @@ done
 
 mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;" # Create Database
 mysql -e "CREATE USER IF NOT EXISTS '${MYSQL_USERD}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
-mysql -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';"
+mysql -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USERD}'@'%';"
 mysql -e "FLUSH PRIVILEGES;"
 
 echo " MariaDB is ready"
