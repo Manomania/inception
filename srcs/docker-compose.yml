@@ -7,12 +7,7 @@ services:
     build:
       context: ./requirements/mariadb
     restart: always
-#    env_file: .env
-    environment:
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_ROOT_PASSWORD: somewordpress
-      MYSQL_PASSWORD: wordpress
+    env_file: .env
     volumes:
       - db_data:/var/lib/mysql
     networks:

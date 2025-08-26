@@ -14,9 +14,9 @@ while ! mysqladmin ping --silent 2>/dev/null; do
     sleep 1
 done
 
-mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" # Create Database
-mysql -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';"
-mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';"
+mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE ;" # Create Database
+mysql -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD' ;"
+mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' ;"
 mysql -e "FLUSH PRIVILEGES;"
 
 echo " MariaDB is ready"
