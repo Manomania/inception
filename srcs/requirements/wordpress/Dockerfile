@@ -22,6 +22,8 @@ RUN     apt-get update -y && \
 
 RUN     sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = 9000/g' /etc/php/8.2/fpm/pool.d/www.conf
 
+RUN     echo "clear_env = no" >> /etc/php/8.2/fpm/pool.d/www.conf
+
 RUN     mkdir -p /var/www/html && \
         wget https://wordpress.org/latest.tar.gz && \
         tar -xzf latest.tar.gz && \
