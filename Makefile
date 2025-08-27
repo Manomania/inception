@@ -50,6 +50,10 @@ restart:				down up
 
 clean:					.print_header
 							@docker compose -f $(COMPOSE) down --remove-orphans
+							@docker image prune -f
+							@docker volume prune -f
+
+fclean:					.print_header clean
 							@docker image prune -a -f
 							@docker volume prune -a -f
 
