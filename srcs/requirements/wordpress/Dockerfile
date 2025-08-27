@@ -17,7 +17,8 @@ RUN     apt-get update -y && \
         php-mbstring \
         php-zip \
         wget \
-        curl && \
+        curl \
+        mariadb-client && \
         rm -rf /var/lib/apt/lists/*
 
 
