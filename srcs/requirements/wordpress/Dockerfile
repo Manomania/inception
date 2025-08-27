@@ -16,7 +16,7 @@ RUN     apt-get update -y && \
         php-intl \
         php-mbstring \
         php-zip \
-        wget && \
+        wget \
         curl && \
         rm -rf /var/lib/apt/lists/*
 
