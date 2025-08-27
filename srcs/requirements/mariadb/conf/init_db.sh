@@ -2,11 +2,6 @@
 
 set -e # if error, stop everything
 
-echo "=== VÉRIFICATION DES VARIABLES ==="
-echo "MYSQL_DATABASE: '${MYSQL_DATABASE}'"
-echo "MYSQL_USER: '${MYSQL_USER}'"
-echo "MYSQL_PASSWORD: '${MYSQL_PASSWORD}'"
-
 if [ ! -d "/var/lib/mysql/mysql" ]; then
   mysql_install_db --user=mysql --datadir=/var/lib/mysql # Init BDD for the first time
 else
@@ -20,8 +15,6 @@ while ! mysqladmin ping --silent 2>/dev/null; do
     sleep 1
 done
 
-mysql --version
-mysql -e "SELECT VERSION();"
 mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;" # Create Database
 mysql -e "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
 mysql -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';"
