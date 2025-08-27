@@ -18,21 +18,32 @@
  * @package WordPress
  */
 
- var_dump($_ENV['WORDPRESS_DB_NAME'], $_ENV['WORDPRESS_DB_USER'], $_ENV['WORDPRESS_DB_PASSWORD'], $_ENV['WORDPRESS_DB_HOST']);
- die();
+$required_vars = [
+    'WORDPRESS_DB_NAME',
+    'WORDPRESS_DB_USER',
+    'WORDPRESS_DB_PASSWORD',
+    'WORDPRESS_DB_HOST',
+    'DOMAIN_NAME'
+];
+
+foreach ($required_vars as $var) {
+    if (!getenv($var)) {
+        die("Error: .env var $var is missing");
+    }
+}
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', $_ENV['WORDPRESS_DB_NAME'] );
+define( 'DB_NAME', getenv('WORDPRESS_DB_NAME') );
 
 /** Database username */
-define( 'DB_USER', $_ENV['WORDPRESS_DB_USER'] );
+define( 'DB_USER', getenv('WORDPRESS_DB_USER') );
 
 /** Database password */
-define( 'DB_PASSWORD', $_ENV['WORDPRESS_DB_PASSWORD'] );
+define( 'DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD') );
 
 /** Database hostname */
-define( 'DB_HOST', $_ENV['WORDPRESS_DB_HOST'] );
+define( 'DB_HOST', getenv('WORDPRESS_DB_HOST') );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
@@ -40,8 +51,8 @@ define( 'DB_CHARSET', 'utf8' );
 /** The database collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
 
-define( 'WP_HOME', 'http://' . $_ENV['DOMAIN_NAME'] );
-define( 'WP_SITEURL', 'http://' . $_ENV['DOMAIN_NAME'] );
+define( 'WP_HOME', 'http://' . getenv('DOMAIN_NAME') );
+define( 'WP_SITEURL', 'http://' . getenv('DOMAIN_NAME') );
 
 /**#@+
  * Authentication unique keys and salts.
