@@ -32,7 +32,7 @@ RUN     mkdir -p /var/www/html && \
 
 EXPOSE  9000
 
-COPY    /conf/wp-config-sample.php var/www/html/wordpress/wp-config.php
+COPY    /conf/wp-config-sample.php /var/www/html/wordpress/wp-config.php
 
 RUN     chown www-data:www-data /var/www/html/wp-config.php
 
