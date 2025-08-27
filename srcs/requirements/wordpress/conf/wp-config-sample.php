@@ -18,10 +18,6 @@
  * @package WordPress
  */
 
-
-var_dump($_ENV['WORDPRESS_DB_NAME'], $_ENV['WORDPRESS_DB_USER'], $_ENV['WORDPRESS_DB_PASSWORD'], $_ENV['WORDPRESS_DB_HOST']);
-die();
-
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', $_ENV['WORDPRESS_DB_NAME'] );

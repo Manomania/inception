@@ -32,6 +32,7 @@ RUN     mkdir -p /var/www/html && \
 
 EXPOSE  9000
 
+COPY    /conf/wp-config-sample.php var/www/html/wordpress/wp-config.php
+
 CMD     ["php-fpm8.2", "-F"]
 
-COPY    /conf/wp-config-sample.php /wordpress/wp-config.php
