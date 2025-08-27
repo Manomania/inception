@@ -33,18 +33,17 @@ RUN     mkdir -p /var/www/html && \
         chmod -R 755 /var/www/html
 
 COPY    /conf/wp-config.php /var/www/html/wp-config.php
+COPY    /tools/config.sh /usr/local/bin/config.sh
 
-RUN     chown www-data:www-data /var/www/html/wp-config.php && \
+RUN     chmox +x /usr/local/bin/config.sh && \
+        chown www-data:www-data /var/www/html/wp-config.php && \
         curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
         chmod +x wp-cli.phar && \
         mv wp-cli.phar /usr/local/bin/wp
 
 WORKDIR /var/www/html/
 
-RUN     wp core install --url="https://$WP_DOMAIN_NAME" --title="$WP_TITLE" --admin_user="$WP_ADMIN_USER" --admin_password="$WP_ADMIN_PASSWORD" --admin_email="$WP_ADMIN_EMAIL" --allow-root
-
-
 EXPOSE  9000
 
-CMD     ["php-fpm8.2", "-F"]
+CMD     ["/usr/local/bin/config.sh"]
 
