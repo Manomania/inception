@@ -11,7 +11,7 @@ RUN     mkdir -p /run/mysqld && \
         chown mysql:mysql /run/mysqld && \
         chmod 755 /run/mysqld
 
-COPY    /conf/init_db.sh /usr/local/bin/init_db.sh
+COPY    /tools/init_db.sh /usr/local/bin/init_db.sh
 RUN     chmod +x /usr/local/bin/init_db.sh
 
 EXPOSE  3306
