@@ -26,7 +26,9 @@ RUN     mkdir -p /var/www/html && \
         wget https://wordpress.org/latest.tar.gz && \
         tar -xzf latest.tar.gz && \
         rm -rf latest.tar.gz && \
-        cp -r wordpress/* /var/www/html/
+        cp -r wordpress/* /var/www/html/ && \
+        chown -R www-data:www-data /var/www/html && \
+        chmod -R 755 /var/www/html
 
 EXPOSE  9000
 
