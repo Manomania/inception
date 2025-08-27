@@ -17,6 +17,7 @@ RUN     apt-get update -y && \
         php-mbstring \
         php-zip \
         wget && \
+        curl && \
         rm -rf /var/lib/apt/lists/*
 
 
