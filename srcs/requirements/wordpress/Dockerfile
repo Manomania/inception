@@ -19,6 +19,8 @@ RUN     apt-get update -y && \
         wget && \
         rm -rf /var/lib/apt/lists/*
 
+COPY    /conf/wp-config-sample.php /wordpress/wp-config.php
+
 RUN     sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = 9000/g' /etc/php/8.2/fpm/pool.d/www.conf
 
 RUN     mkdir -p /var/www/html && \
