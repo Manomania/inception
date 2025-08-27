@@ -30,11 +30,11 @@ RUN     mkdir -p /var/www/html && \
         chown -R www-data:www-data /var/www/html && \
         chmod -R 755 /var/www/html
 
-EXPOSE  9000
-
-COPY    /conf/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+COPY    /conf/wp-config-sample.php /var/www/html/wp-config.php
 
 RUN     chown www-data:www-data /var/www/html/wp-config.php
+
+EXPOSE  9000
 
 CMD     ["php-fpm8.2", "-F"]
 
