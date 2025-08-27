@@ -35,7 +35,7 @@ RUN     mkdir -p /var/www/html && \
 COPY    /conf/wp-config.php /var/www/html/wp-config.php
 COPY    /tools/config.sh /usr/local/bin/config.sh
 
-RUN     chmox +x /usr/local/bin/config.sh && \
+RUN     chmod +x /usr/local/bin/config.sh && \
         chown www-data:www-data /var/www/html/wp-config.php && \
         curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
         chmod +x wp-cli.phar && \
