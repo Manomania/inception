@@ -18,20 +18,6 @@
  * @package WordPress
  */
 
-$required_vars = [
-    'WORDPRESS_DB_NAME',
-    'WORDPRESS_DB_USER',
-    'WORDPRESS_DB_PASSWORD',
-    'WORDPRESS_DB_HOST',
-    'DOMAIN_NAME'
-];
-
-foreach ($required_vars as $var) {
-    if (!getenv($var)) {
-        die("Error: .env var $var is missing");
-    }
-}
-
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', getenv('WORDPRESS_DB_NAME') );
