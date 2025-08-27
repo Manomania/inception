@@ -19,8 +19,8 @@ RUN     apt-get update -y && \
         wget && \
         rm -rf /var/lib/apt/lists/*
 
-RUN     sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = 9000/' /etc/php/8.2/fpm/pool.d/www.conf && \
-        sed -i 's/;listen.allowed_clients = 127.0.0.1/listen.allowed_clients = 0.0.0.0/' /etc/php/8.2/fpm/pool.d/www.conf
+RUN     sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = 9000/g' /etc/php/8.2/fpm/pool.d/www.conf
+#        sed -i 's/;listen.allowed_clients = 127.0.0.1/listen.allowed_clients = 0.0.0.0/' /etc/php/8.2/fpm/pool.d/www.conf
 
 RUN     mkdir -p /var/www/html && \
         wget https://wordpress.org/latest.tar.gz && \
