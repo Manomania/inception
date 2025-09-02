@@ -55,8 +55,7 @@ stop:					.print_header
 restart:				.print_header
 							@docker compose -f $(COMPOSE) restart
 
-reset:					fclean
-							@$(MAKE)
+reset:					fclean build up
 
 clean:					.print_header
 							@docker compose -f $(COMPOSE) down --remove-orphans
