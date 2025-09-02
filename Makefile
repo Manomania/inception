@@ -46,7 +46,17 @@ up: 					.print_header
 down: 					.print_header
 							@docker compose -f $(COMPOSE) down
 
-restart:				down up
+start:					.print_header
+							@docker compose -f $(COMPOSE) start
+
+stop:					.print_header
+							@docker compose -f $(COMPOSE) stop
+
+restart:				.print_header
+							@docker compose -f $(COMPOSE) restart
+
+reset:					fclean
+							@$(MAKE) all
 
 clean:					.print_header
 							@docker compose -f $(COMPOSE) down --remove-orphans
@@ -63,7 +73,7 @@ help:
 info:
 							$(call DISPLAY_INFO)
 
-.PHONY: 				all build up down restart clean help info
+.PHONY: 				all build up down start stop restart clean fclean help info
 
 ########################################################################################################################
 #                                                       COLOURS                                                        #
