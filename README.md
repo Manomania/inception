@@ -1,3 +1,7 @@
+ALIAS:
+vmtogoinfre
+vmtosgoinfre
+
 Sources:
 
 
