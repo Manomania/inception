@@ -33,7 +33,7 @@ while ! mysqladmin ping --silent 2>/dev/null; do
 done
 
 mysql << EOF
-ALTER USER 'root'@'localhost' IDENTIFIED BY mysql_native_password;
+ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password;
 SET PASSWORD = PASSWORD('${MYSQL_ROOT_PASSWORD}');
 CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
 CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
