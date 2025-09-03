@@ -36,10 +36,10 @@ WORDPRESS_DIR			:=	$(DATA_DIR)/wordpress
 							$(call SEPARATOR)
 
 all:					.print_header build up
-							@mkdir -p ${HOME}/data/mariadb
-							@mkdir -p ${HOME}/data/wordpress
 
 build:					.print_header
+							@mkdir -p ${HOME}/data/mariadb
+							@mkdir -p ${HOME}/data/wordpress
 							@docker compose -f $(COMPOSE) build $(DOCKER_BUILD_ARGS)
 
 up: 					.print_header

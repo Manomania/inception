@@ -11,7 +11,7 @@ services:
     restart: always
     env_file: .env
     volumes:
-      - mariadb:/var/lib/mysql
+      - db_data:/var/lib/mysql
     networks:
       - inception
     healthcheck:
@@ -31,7 +31,7 @@ services:
       mariadb:
         condition: service_healthy
     volumes:
-      - wordpress:/var/www/html:rw
+      - wp_data:/var/www/html:rw
     networks:
       - inception
   nginx:
@@ -45,7 +45,7 @@ services:
     depends_on:
       - wordpress
     volumes:
-      - wordpress:/var/www/html:ro
+      - wp_data:/var/www/html:ro
     networks:
       - inception
 
