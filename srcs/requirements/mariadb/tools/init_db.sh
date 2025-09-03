@@ -26,17 +26,14 @@ else
   echo "BDD already exist"
 fi
 
-FIRST_RUN=false
 mysqld --user=mysql --datadir=/var/lib/mysql & # Background server
-FIRST_RUN=true
+
 while ! mysqladmin ping --silent 2>/dev/null; do
     echo "Server waiting..."
     sleep 1
 done
 
-if [ "$FIRST_RUN" = true ]; then
-  echo "Init configuration"
-  mysql << EOF
+mysql << EOF
 ALTER USER 'root'@'localhost' IDENTIFIED BY mysql_native_password;
 SET PASSWORD = PASSWORD('${MYSQL_ROOT_PASSWORD}');
 CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
@@ -44,10 +41,6 @@ CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
 GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
 FLUSH PRIVILEGES;
 EOF
-  echo "Init finished"
-else
-  echo "DB already exist, starting normaly"
-fi
 
 echo " MariaDB is ready"
 
