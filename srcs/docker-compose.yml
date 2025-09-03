@@ -11,7 +11,7 @@ services:
     restart: always
     env_file: .env
     volumes:
-      - db_data:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     networks:
       - inception
     healthcheck:
@@ -31,7 +31,7 @@ services:
       mariadb:
         condition: service_healthy
     volumes:
-      - wp_data:/var/www/html:rw
+      - wordpress:/var/www/html:rw
     networks:
       - inception
   nginx:
@@ -45,7 +45,7 @@ services:
     depends_on:
       - wordpress
     volumes:
-      - wp_data:/var/www/html:ro
+      - wordpress:/var/www/html:ro
     networks:
       - inception
 
@@ -55,14 +55,14 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: ${HOME}/data/mariadb
+      device: "${HOME}/data/mariadb"
       o: bind
   wp_data:
     name: wordpress
     driver: local
     driver_opts:
       type: none
-      device: ${HOME}/data/wordpress
+      device: "${HOME}/data/wordpress"
       o: bind
 
 networks:
