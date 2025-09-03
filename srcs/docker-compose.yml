@@ -27,8 +27,8 @@ services:
       - inception
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "--silent"]
-      interval: 10s
-      timeout: 5s
+      interval: 15s
+      timeout: 10s
       retries: 5
       start_period: 30s
 
