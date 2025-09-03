@@ -1,7 +1,7 @@
 
 services:
   mariadb:
-    image: mariadb
+    image: mariadb:1.0
     container_name: mariadb
 #    secrets:
 #      - MYSQL_ROOT_PASSWORD
@@ -20,7 +20,7 @@ services:
       retries: 5
       start_period: 10s
   wordpress:
-    image: wordpress
+    image: wordpress:1.0
     container_name: wordpress
     build:
       context: ./requirements/wordpress
@@ -34,7 +34,7 @@ services:
     networks:
       - inception
   nginx:
-    image: nginx
+    image: nginx:1.0
     container_name: nginx
     restart: always
     build:
