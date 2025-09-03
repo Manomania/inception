@@ -2,6 +2,7 @@ include:
 
 services:
   mariadb:
+    image: mariadb
     container_name: mariadb
 #    secrets:
 #      - MYSQL_ROOT_PASSWORD
@@ -19,8 +20,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-
   wordpress:
+    image: wordpress
     container_name: wordpress
     build:
       context: ./requirements/wordpress
@@ -33,9 +34,8 @@ services:
       - wp_data:/var/www/html:rw
     networks:
       - inception
-
-
   nginx:
+    image: nginx
     container_name: nginx
     restart: always
     build:
