@@ -54,14 +54,16 @@ volumes:
     name: mariadb
     driver: local
     driver_opts:
-      bind: none
+      type: none
       device: ${HOME}/data/mariadb
+      o: bind
   wp_data:
     name: wordpress
     driver: local
     driver_opts:
-      bind: none
+      type: none
       device: ${HOME}/data/wordpress
+      o: bind
 
 networks:
   inception:
