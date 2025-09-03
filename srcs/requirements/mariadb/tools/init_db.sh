@@ -19,7 +19,7 @@ fi
 chown -R mysql:mysql /var/lib/mysql
 chown -R mysql:mysql /run/mysqld
 
-if [ ! -d "/var/lib/mysql/mysql/$MYSQL_DATABASE" ]; then
+if [ ! -d "/var/lib/mysql/$MYSQL_DATABASE" ]; then
   mysql_install_db --user=mysql --datadir=/var/lib/mysql # Init BDD for the first time
 else
   echo "BDD already exist"
