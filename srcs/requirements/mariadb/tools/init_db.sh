@@ -24,7 +24,7 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 else
   echo "BDD already exist"
 fi
-
+if [ ! -d "/var/lib/mysql/${MYSQL_DATABASE}" ]; then
 mysqld --user=mysql --datadir=/var/lib/mysql & # Background server
 
 while ! mysqladmin ping --silent 2>/dev/null; do
@@ -42,5 +42,6 @@ FLUSH PRIVILEGES;
 EOF
 
 echo " MariaDB is ready"
+fi
 
 wait # Container still running
