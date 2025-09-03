@@ -1,10 +1,22 @@
+secrets:
+  mysql_password:
+    file: ../secrets/mysql_password
+  mysql_root_password:
+    file: ../secrets/mysql_root_password
+  wp_admin_email:
+    file: ../secrets/wp_admin_email
+  wp_admin_user:
+    file: ../secrets/wp_admin_user
+  wp_admin_password:
+    file: ../secrets/wp_admin_password
 
 services:
   mariadb:
     image: mariadb:1.0
     container_name: mariadb
-#    secrets:
-#      - MYSQL_ROOT_PASSWORD
+    secrets:
+      - mysql_password
+      - mysql_root_password
     build:
       context: ./requirements/mariadb
     restart: always
@@ -19,9 +31,15 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
+
   wordpress:
     image: wordpress:1.0
     container_name: wordpress
+    secrets:
+      - mysql_password
+      - wp_admin_email
+      - wp_admin_user
+      - wp_admin_password
     build:
       context: ./requirements/wordpress
     restart: always
@@ -33,6 +51,7 @@ services:
       - wp_data:/var/www/html:rw
     networks:
       - inception
+
   nginx:
     image: nginx:1.0
     container_name: nginx
@@ -69,6 +88,3 @@ networks:
     name: inception
     driver: bridge
 
-secrets:
-  MYSQL_ROOT_PASSWORD:
-    external: true

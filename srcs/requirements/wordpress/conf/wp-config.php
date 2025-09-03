@@ -18,6 +18,13 @@
  * @package WordPress
  */
 
+if (file_exists('/run/secrets/mysql_password')) {
+    $db_password= trim(file_get_contents('/run/secrets/mysql_password'));
+} else {
+    echo "Error: mysql_password secret not found";
+    exit (1);
+}
+
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', getenv('WORDPRESS_DB_NAME') );
@@ -26,7 +33,7 @@ define( 'DB_NAME', getenv('WORDPRESS_DB_NAME') );
 define( 'DB_USER', getenv('WORDPRESS_DB_USER') );
 
 /** Database password */
-define( 'DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD') );
+define( 'DB_PASSWORD', $db_password );
 
 /** Database hostname */
 define( 'DB_HOST', getenv('WORDPRESS_DB_HOST') );

@@ -2,6 +2,20 @@
 
 set -e # if error, stop everything
 
+if [ -f "/run/secrets/mysql_root_password" ]; then
+  MYSQL_ROOT_PASSWORD=$(cat /run/secrets/mysql_root_password)
+else
+  echo "Error: mysql_root_password secret not found"
+  exit 1
+fi
+
+if [ -f "/run/secrets/mysql_password" ]; then
+  MYSQL_PASSWORD=$(cat /run/secrets/mysql_password)
+else
+  echo "Error: mysql_password secret not found"
+  exit 1
+fi
+
 chown -R mysql:mysql /var/lib/mysql
 chown -R mysql:mysql /run/mysqld
 
@@ -18,10 +32,12 @@ while ! mysqladmin ping --silent 2>/dev/null; do
     sleep 1
 done
 
-mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;" # Create Database
-mysql -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
-mysql -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';"
-mysql -e "FLUSH PRIVILEGES;"
+mysql -e "ALTER USE 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
+
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';"
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "FLUSH PRIVILEGES;"
 
 echo " MariaDB is ready"
 
