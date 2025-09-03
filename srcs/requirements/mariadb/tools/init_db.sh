@@ -26,7 +26,6 @@ else
 fi
 
 mysqld --user=mysql --datadir=/var/lib/mysql & # Background server
-MYSQLD_PID=$!
 
 while ! mysqladmin ping --silent 2>/dev/null; do
     echo "Server waiting..."
@@ -43,4 +42,4 @@ EOF
 
 echo " MariaDB is ready"
 
-wait $MYSQLD_PID# Container still running
+wait # Container still running

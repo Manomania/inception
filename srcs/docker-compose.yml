@@ -30,7 +30,7 @@ services:
       interval: 15s
       timeout: 10s
       retries: 5
-      start_period: 30s
+      start_period: 60s
 
   wordpress:
     image: wordpress:1.0
