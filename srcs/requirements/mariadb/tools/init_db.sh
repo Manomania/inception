@@ -24,15 +24,16 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 else
   echo "BDD already exist"
 fi
+
 if [ ! -d "/var/lib/mysql/${MYSQL_DATABASE}" ]; then
-mysqld --user=mysql --datadir=/var/lib/mysql & # Background server
+  mysqld --user=mysql --datadir=/var/lib/mysql & # Background server
 
-while ! mysqladmin ping --silent 2>/dev/null; do
-    echo "Server waiting..."
-    sleep 1
-done
+  while ! mysqladmin ping --silent 2>/dev/null; do
+      echo "Server waiting..."
+      sleep 1
+  done
 
-mysql << EOF
+  mysql << EOF
 ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password;
 SET PASSWORD = PASSWORD('${MYSQL_ROOT_PASSWORD}');
 CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
@@ -41,7 +42,7 @@ GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
 FLUSH PRIVILEGES;
 EOF
 
-echo " MariaDB is ready"
+  echo " MariaDB is ready"
 fi
 
 wait # Container still running
