@@ -33,14 +33,12 @@ while ! mysqladmin ping --silent 2>/dev/null; do
     sleep 1
 done
 
-mysql << EOF
-ALTER USER 'root'@'localhost' IDENTIFIED BY mysql_native_password;
-SET PASSWORD = PASSWORD('${MYSQL_ROOT_PASSWORD}');
-CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
-CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
-GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
-FLUSH PRIVILEGES;
-EOF
+mysql -e ALTER USER 'root'@'localhost' IDENTIFIED BY mysql_native_password;
+mysql -e SET PASSWORD = PASSWORD('${MYSQL_ROOT_PASSWORD}');
+mysql -e CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
+mysql -e CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
+mysql -e GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
+mysql -e FLUSH PRIVILEGES;
 
 echo " MariaDB is ready"
 
