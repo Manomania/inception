@@ -33,7 +33,8 @@ while ! mysqladmin ping --silent 2>/dev/null; do
     echo "Server waiting..."
     sleep 1
 done
-if [ "$FIRST_RUN" = true]; then
+
+if [ "$FIRST_RUN" = true ]; then
   echo "Init configuration"
   mysql << EOF
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
