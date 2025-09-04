@@ -20,27 +20,34 @@ chown -R mysql:mysql /var/lib/mysql
 chown -R mysql:mysql /run/mysqld
 
 if [ ! -d "/var/lib/mysql/$MYSQL_DATABASE" ]; then
-  mysql_install_db --user=mysql --datadir=/var/lib/mysql # Init BDD for the first time
-else
-  echo "BDD already exist"
-fi
+  echo "Initializing database..."
+  mysql_install_db --user=mysql --datadir=/var/lib/mysql
+  mysqld --user=mysql --datadir=/var/lib/mysql & # background server
+  MYSQL_PID=$!
 
-mysqld --user=mysql --datadir=/var/lib/mysql & # Background server
+  while ! mysqladmin ping --silent 2>/dev/null; do
+      echo "Waiting for MySQL to start..."
+      sleep 2
+  done
 
-while ! mysqladmin ping --silent 2>/dev/null; do
-    echo "Server waiting..."
-    sleep 1
-done
-
-mysql << EOF
+  mysql << EOF
 ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password;
 SET PASSWORD = PASSWORD('${MYSQL_ROOT_PASSWORD}');
 CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
 CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
 GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
+CREATE USER IF NOT EXISTS 'healthcheck'@'localhost';
+GRANT USAGE ON *.* TO 'healthcheck'@'localhost';
 FLUSH PRIVILEGES;
 EOF
 
-  echo " MariaDB is ready"
+  kill $MYSQL_PID
+  wait $MYSQL_PID
 
-wait # Container still running
+  echo "Database initialization complete"
+else
+  echo "Database already exists"
+fi
+
+echo "Starting MySQL server..."
+exec mysqld --user=mysql --datadir=/var/lib/mysql
