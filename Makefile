@@ -6,6 +6,7 @@ AUTHOR				:=	maximart
 PROJECT_NAME		:=	inception
 
 COMPOSE_F			:=	docker-compose
+COMPOSE_FB			:=
 COMPOSE				=	$(addprefix $(COMPOSE_DIR), $(addsuffix .yml, $(COMPOSE_F)))
 DOCKER_BUILD_ARGS	=	--build-arg BUILD_DATE="$(BUILD_DATE)" \
 						--build-arg VERSION="$(VERSION)" \

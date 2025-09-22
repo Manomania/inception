@@ -73,14 +73,14 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: "${HOME}/data/mariadb"
+      device: "${HOME}/${USER}/data/mariadb"
       o: bind
   wp_data:
     name: wordpress
     driver: local
     driver_opts:
       type: none
-      device: "${HOME}/data/wordpress"
+      device: "${HOME}/${USER}/data/wordpress"
       o: bind
 
 networks:
