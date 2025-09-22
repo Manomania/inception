@@ -1,6 +1,6 @@
 ALIAS:
-vmtogoinfre = rsynx -avh --progress sgoinfre to goinfre
-vmtosgoinfre = rsynx -avh --progress goinfre to sgoinfre
+vmtogoinfre = rsync -avh --progress sgoinfre to goinfre
+vmtosgoinfre = rsync -avh --progress goinfre to sgoinfre
 
 Sources:
 
