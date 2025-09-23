@@ -6,8 +6,9 @@ AUTHOR				:=	maximart
 PROJECT_NAME		:=	inception
 
 COMPOSE_F			:=	docker-compose
-COMPOSE_FB			:=
+COMPOSE_FB			:=	docker-compose-bonus
 COMPOSE				=	$(addprefix $(COMPOSE_DIR), $(addsuffix .yml, $(COMPOSE_F)))
+COMPOSE_B			=	$(addprefix $(COMPOSE_DIR), $(addsuffix .yml, $(COMPOSE_FB)))
 DOCKER_BUILD_ARGS	=	--build-arg BUILD_DATE="$(BUILD_DATE)" \
 						--build-arg VERSION="$(VERSION)" \
 						--build-arg AUTHOR="$(AUTHOR)"
@@ -22,9 +23,14 @@ UNAME_S				:=	$(shell uname -s 2>/dev/null || echo "Unknown")
 
 COMPOSE_DIR				:=	srcs/
 DATA_DIR				:=	$(COMPOSE_DIR)requirements/
+BONUS_DIR				:=	$(COMPOSE_DIR)requirements/bonus/
 MARIADB_DIR				:=	$(DATA_DIR)/mariadb
 NGINX_DIR				:=	$(DATA_DIR)/nginx
 WORDPRESS_DIR			:=	$(DATA_DIR)/wordpress
+ADMINER_DIR				:=	$(BONUS_DIR)/adminer
+FTPSERVER_DIR			:=	$(BONUS_DIR)/FTPserver
+REDIS_DIR				:=	$(BONUS_DIR)/redis
+STATIC_DIR				:=	$(BONUS_DIR)/static
 
 ########################################################################################################################
 #                                                       TARGETS                                                        #
@@ -49,6 +55,29 @@ up: 					.print_header
 down: 					.print_header
 							@docker compose -f $(COMPOSE) down
 
+bonus:					.print_header bonus-build bonus-up
+
+bonus-build:			.print_header
+							@mkdir -p ${HOME}/data/mariadb
+							@mkdir -p ${HOME}/data/wordpress
+							@mkdir -p ${HOME}/data/redis
+							@docker compose -f $(COMPOSE_B) build $(DOCKER_BUILD_ARGS)
+
+bonus-up: 				.print_header
+							@docker compose -f $(COMPOSE_B) up -d
+
+bonus-down: 			.print_header
+							@docker compose -f $(COMPOSE_B) down
+
+bonus-start:			.print_header
+							@docker compose -f $(COMPOSE_B) start
+
+bonus-stop:				.print_header
+							@docker compose -f $(COMPOSE_B) stop
+
+bonus-restart:			.print_header
+							@docker compose -f $(COMPOSE_B) restart
+
 start:					.print_header
 							@docker compose -f $(COMPOSE) start
 
@@ -60,22 +89,22 @@ restart:				.print_header
 
 reset:					fclean build up
 
+bonus-reset:			bonus-fclean bonus-build bonus-up
+
 clean:					.print_header
 							@docker compose -f $(COMPOSE) down --remove-orphans
+							@docker compose -f $(COMPOSE_B) down --remove-orphans 2>/dev/null || true
 							@docker image prune -f
 							@docker volume prune -f
 
 fclean:					.print_header clean
+							@rm -rf ${HOME}/data
 							@docker image prune -a -f
-							@docker volume prune -a -f
+							@docker volume rm $$(docker volume ls -q)
 
-help:
-							$(call DISPLAY_HELP)
-
-info:
-							$(call DISPLAY_INFO)
-
-.PHONY: 				all build up down start stop restart clean fclean help info
+.PHONY: 				all bonus build bonus-build up down bonus-up bonus-down \
+						start stop restart bonus-start bonus-stop bonus-restart \
+						reset bonus-reset clean fclean help info
 
 ########################################################################################################################
 #                                                       COLOURS                                                        #
