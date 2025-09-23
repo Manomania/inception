@@ -93,7 +93,7 @@ bonus-reset:			bonus-fclean bonus-build bonus-up
 
 clean:					.print_header
 							@docker compose -f $(COMPOSE) down --remove-orphans
-							@docker compose -f $(COMPOSE_B) down --remove-orphans 2>/dev/null || true
+							@docker compose -f $(COMPOSE_B) down --remove-orphans 2>/dev/null
 							@docker image prune -f
 							@docker volume prune -f
 
