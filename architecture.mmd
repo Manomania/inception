@@ -1,0 +1,63 @@
+graph TB
+    %% External Access
+    Client[Client Browser] -->|HTTPS:443| Nginx
+
+    %% Container Network
+    subgraph Docker["Docker Environment"]
+        subgraph Network["inception network (bridge)"]
+            %% Services
+            Nginx[nginx:1.0<br/>Container: nginx<br/>Port: 443]
+            WordPress[wordpress:1.0<br/>Container: wordpress<br/>PHP-FPM]
+            MariaDB[mariadb:1.0<br/>Container: mariadb<br/>MySQL Database]
+        end
+
+        %% Volumes
+        subgraph Volumes["Persistent Storage"]
+            WP_Vol[wp_data<br/>WordPress Files<br/>~/data/wordpress]
+            DB_Vol[db_data<br/>Database Files<br/>~/data/mariadb]
+        end
+
+        %% Secrets
+        subgraph Secrets["Docker Secrets"]
+            MySQLPass[mysql_password]
+            MySQLRoot[mysql_root_password]
+            WPEmail[wp_admin_email]
+            WPUser[wp_admin_user]
+            WPPass[wp_admin_password]
+        end
+    end
+
+    %% Service Dependencies
+    Nginx -->|depends_on| WordPress
+    WordPress -->|depends_on<br/>service_healthy| MariaDB
+
+    %% Volume Mounts
+    WordPress -.->|rw| WP_Vol
+    Nginx -.->|ro| WP_Vol
+    MariaDB -.->|rw| DB_Vol
+
+    %% Secret Access
+    WordPress -.->|uses| MySQLPass
+    WordPress -.->|uses| WPEmail
+    WordPress -.->|uses| WPUser
+    WordPress -.->|uses| WPPass
+    MariaDB -.->|uses| MySQLPass
+    MariaDB -.->|uses| MySQLRoot
+
+    %% Service Communication
+    Nginx -->|proxy_pass| WordPress
+    WordPress -->|database queries| MariaDB
+
+    %% Health Checks
+    MariaDB -.->|healthcheck<br/>mysqladmin ping| MariaDB
+
+    %% Styling
+    classDef service fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef volume fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef secret fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef external fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+
+    class Nginx,WordPress,MariaDB service
+    class WP_Vol,DB_Vol volume
+    class MySQLPass,MySQLRoot,WPEmail,WPUser,WPPass secret
+    class Client external
